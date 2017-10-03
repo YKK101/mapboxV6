@@ -11,20 +11,21 @@ import {
   Text,
   View
 } from 'react-native';
+import { TEST } from 'react-native-dotenv'
 
 export default class mapboxV6 extends Component {
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          {TEST}
         </Text>
         <Text style={styles.instructions}>
-          To get started, edit index.ios.js
+          To get started, edit index.android.js
         </Text>
         <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
+          Double tap R on your keyboard to reload,{'\n'}
+          Shake or press menu button for dev menu
         </Text>
       </View>
     );

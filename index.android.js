@@ -11,13 +11,14 @@ import {
   Text,
   View
 } from 'react-native';
+import { TEST } from 'react-native-dotenv'
 
 export default class mapboxV6 extends Component {
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          {TEST}
         </Text>
         <Text style={styles.instructions}>
           To get started, edit index.android.js
