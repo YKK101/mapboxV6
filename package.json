@@ -1,25 +1,37 @@
 {
-	"name": "mapboxV6",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"start": "node node_modules/react-native/local-cli/cli.js start",
-		"test": "jest"
-	},
-	"dependencies": {
-		"@mapbox/react-native-mapbox-gl": "https://github.com/mapbox/react-native-mapbox-gl.git#v6",
-		"react": "16.0.0-alpha.12",
-		"react-native": "0.48.4",
-		"react-native-dotenv": "^0.1.0",
-		"styled-components": "^2.2.1"
-	},
-	"devDependencies": {
-		"babel-jest": "21.2.0",
-		"babel-preset-react-native": "4.0.0",
-		"jest": "21.2.1",
-		"react-test-renderer": "16.0.0-alpha.12"
-	},
-	"jest": {
-		"preset": "react-native"
-	}
+  "name": "mapboxV6",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "storybook": "storybook start -p 7007",
+    "prestorybook": "rnstl"
+  },
+  "dependencies": {
+    "@mapbox/react-native-mapbox-gl": "https://github.com/mapbox/react-native-mapbox-gl.git#v6",
+    "react": "16.0.0-alpha.12",
+    "react-native": "0.48.4",
+    "react-native-dotenv": "^0.1.0",
+    "styled-components": "^2.2.1"
+  },
+  "devDependencies": {
+    "@storybook/react-native": "^3.2.12",
+    "babel-jest": "21.2.0",
+    "babel-preset-react-native": "4.0.0",
+    "jest": "21.2.1",
+    "react-dom": "16.0.0-alpha.12",
+    "react-native-storybook-loader": "^1.5.1",
+    "react-test-renderer": "16.0.0-alpha.12"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "config": {
+    "react-native-storybook-loader": {
+      "searchDir": ["./src/components", "./packages"],
+      "pattern": "**/*.stories.js",
+      "outputFile": "./storybook/storyLoader.js"
+    }
+  }
 }
