@@ -3,6 +3,7 @@ import {
   InteractionManager,
 } from 'react-native'
 import MapboxGL from '@mapbox/react-native-mapbox-gl'
+import turf from '../../utils/turf.min'
 import { Container } from '../../styled'
 import { Map } from '../../styled/map'
 import {
@@ -14,6 +15,8 @@ import {
 } from '../../config/map'
 import { isPlatformAndroid } from '../../utils/device'
 import { poiData } from '../../config/data'
+import { convertPoiDataListToFetureCollection } from '../../utils/map'
+import { mapDynamicStyle } from '../../mapDynamicStyles'
 
 class MainMap extends Component {
   constructor(props) {
@@ -22,7 +25,13 @@ class MainMap extends Component {
     this.state = {
       isRender: false,
       isUserLocationPermitted: false,
+      poiFeatureCollection: turf.featureCollection([]),
     }
+  }
+
+  loadPoiData = () => {
+    const poiFeatureCollection = convertPoiDataListToFetureCollection(poiData)
+    this.setState({ poiFeatureCollection })
   }
 
   checkAndroidLocationPermitted = async () => {
@@ -39,6 +48,7 @@ class MainMap extends Component {
     .then(async () => {
       this.checkAndroidLocationPermitted()
       this.setState({ isRender: true })
+      this.loadPoiData()
     })
   }
 
@@ -57,7 +67,20 @@ class MainMap extends Component {
           showUserLocation={isUserLocationPermitted}
           attributionEnabled={false}
           logoEnabled={false}
-        />
+        >
+          { turf.coordAll(this.state.poiFeatureCollection).length > 0 &&
+            <MapboxGL.ShapeSource
+              id="poi_data"
+              shape={this.state.poiFeatureCollection}
+              cluster
+            >
+              <MapboxGL.SymbolLayer
+                id="poi_layer"
+                style={mapDynamicStyle.poiLayer}
+              />
+            </MapboxGL.ShapeSource>
+          }
+        </Map>
       ) : (
         <Container />
       )
