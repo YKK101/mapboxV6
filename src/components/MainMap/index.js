@@ -13,6 +13,7 @@ import {
   MAP_MAX_ZOOM,
 } from '../../config/map'
 import { isPlatformAndroid } from '../../utils/device'
+import { poiData } from '../../config/data'
 
 class MainMap extends Component {
   constructor(props) {
@@ -24,19 +25,21 @@ class MainMap extends Component {
     }
   }
 
-  async componentDidMount() {
+  checkAndroidLocationPermitted = async () => {
+    let isGranted = true
     if (isPlatformAndroid()) {
-      const isGranted = await MapboxGL.requestAndroidLocationPermissions()
-      this.setState({
-        isUserLocationPermitted: isGranted,
-        isRender: true
-      })
-    } else {
-      this.setState({
-        isUserLocationPermitted: true,
-        isRender: true,
-      })
+      isGranted = await MapboxGL.requestAndroidLocationPermissions()
     }
+
+    this.setState({ isUserLocationPermitted: isGranted })
+  }
+
+  componentDidMount() {
+    InteractionManager.runAfterInteractions()
+    .then(async () => {
+      this.checkAndroidLocationPermitted()
+      this.setState({ isRender: true })
+    })
   }
 
   render() {
@@ -51,9 +54,9 @@ class MainMap extends Component {
           zoomLevel={MAP_DEFAULT_ZOOM}
           minZoomLevel={MAP_MIN_ZOOM}
           maxZoomLevel={MAP_MAX_ZOOM}
+          showUserLocation={isUserLocationPermitted}
           attributionEnabled={false}
           logoEnabled={false}
-          showUserLocation={isUserLocationPermitted}
         />
       ) : (
         <Container />
