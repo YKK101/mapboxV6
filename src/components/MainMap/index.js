@@ -26,22 +26,11 @@ class MainMap extends Component {
 
   async componentDidMount() {
     if (isPlatformAndroid()) {
-      await MapboxGL.requestPermissions()
-      .then(({isGranted}) => {
-        console.log('isgrant ', isGranted)
-        this.setState({
-          isUserLocationPermitted: isGranted,
-        })
+      const isGranted = await MapboxGL.requestAndroidLocationPermissions()
+      this.setState({
+        isUserLocationPermitted: isGranted,
+        isRender: true
       })
-      .catch(err => {
-        console.log('err ', err)
-        this.setState({
-          isUserLocationPermitted: false,
-        })
-      })
-
-      console.log('here')
-      this.setState({ isRender: true })
     } else {
       this.setState({
         isUserLocationPermitted: true,
