@@ -9,7 +9,7 @@
     "prestorybook": "rnstl"
   },
   "dependencies": {
-    "@mapbox/react-native-mapbox-gl": "https://github.com/mapbox/react-native-mapbox-gl#bugfix/662",
+    "@mapbox/react-native-mapbox-gl": "https://github.com/mapbox/react-native-mapbox-gl#v6",
     "prop-types": "^15.6.0",
     "react": "16.0.0-alpha.12",
     "react-native": "0.48.4",
